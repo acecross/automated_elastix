@@ -2,8 +2,8 @@ from image_operations import ImageStuff
 from facade import TransformElastix
 
 EXPECTED_EXPASION = 3
-path1 =
-path2 = 
+path1 = r"D:\Daten\Nora\Pre-post\data\crops\pilz\C1-MAX_NK_Af_preExp_atubulin_mitoRFP_snap_1_stack_1__POST-1_cut.tif"
+path2 = r"D:\Daten\Nora\Pre-post\data\crops\pilz\C1-MAX_NK_Af_preExp_atubulin_mitoRFP_snap_1_stack_1_cut.tif"
 
 
 if __name__ == '__main__':

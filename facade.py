@@ -18,7 +18,10 @@ class TransformElastix():
         self.bSplineParameterMap = sitk.ReadParameterFile(self.INITIAL_SPLINE_PF)
 
         self.process = sitk.ElastixImageFilter()
+        self.process.SetOutputDirectory("tmp")
         self.t_process = sitk.TransformixImageFilter()
+        self.t_process.SetOutputDirectory("tmp")
+
 
     def similarity_transform(self):
         if not self._fixed_i or not self._move_i:
