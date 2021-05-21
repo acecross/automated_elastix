@@ -4,7 +4,7 @@ import numpy as np
 
 class TransformElastix():
     ECPECTED_EXPANSION = 3.5
-    SPACING = 20
+    SPACING = 10
     INITIAL_SIMILARITY_PF = "static/similarity_parameters.txt"
     INITIAL_SPLINE_PF = "static/b_spline_parameters.txt"
     QUIVER = namedtuple("Quiver", "XY YX XY_final YX_final cm")
@@ -68,8 +68,8 @@ class TransformElastix():
         self.t_process.Execute()
         YX_new = self.t_result_image
 
-        XY_final = XY_new - XY
-        YX_final = YX_new - YX
+        XY_final = XY - XY_new
+        YX_final = YX - YX_new
         XY_final[np.where(XY_new == 0)] = 0
         YX_final[np.where(YX_new == 0)] = 0
         XY = XY[::self.SPACING, ::self.SPACING]
@@ -110,3 +110,5 @@ class TransformElastix():
     @property
     def t_result_image(self):
         return sitk.GetArrayFromImage(self.t_process.GetResultImage())
+
+
