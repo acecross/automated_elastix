@@ -5,7 +5,7 @@ from skimage import io
 import os
 
 class ImageStuff():
-    ORANGE = (0.9, .4, .11, 0.5)
+    ORANGE = (0.9, .4, .11, 0.15)
     #ORANGE = (1,1,1,1)
     CYAN = (.0, 1.0, 1.0, 1.0)
     BLUE = (0,0,1.0,1.0)
@@ -24,20 +24,30 @@ class ImageStuff():
         res_rgba[:, :, 0] = (image / image.max()) * color[0]
         res_rgba[:, :, 1] = (image / image.max()) * color[1]
         res_rgba[:, :, 2] = (image / image.max()) * color[2]
-        res_rgba[:, :, 3] = (image / image.max()) * color[3]
+        res_rgba[:, :, 3] =  color[3]
         res_rgba = np.clip(multiplier * res_rgba, 0, 1.0)
         return res_rgba
 
-    def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None):
-        im_rgba = self.image_to_rgba_color(im1, self.ORANGE, multiplier=3)
-        res_rgba = self.image_to_rgba_color(im2, self.CYAN , multiplier=3)
+    def show_overlay(self, im1, im2, scale=1, TP=None, vec_map=None, save_path=None):
+        im_rgba = self.image_to_rgba_color(im1, self.ORANGE, multiplier=4)
+        res_rgba = self.image_to_rgba_color(im2, self.CYAN , multiplier=2)
 
         plt.imshow(np.zeros_like(im1)*255)
         plt.imshow(res_rgba)
         plt.imshow(im_rgba)
+        plt.axis('off')
+        pearson = np.corrcoef(im1.flatten(), im2.flatten())
+
         if TP:
-            plt.title(f"Expansion = {scale/float(TP['TransformParameters'][0]):.2f}")
+            plt.title(f"Expansion = {scale/float(TP['TransformParameters'][0]):.2f}\n Pearson = {pearson[0][1]:.2f}", fontsize=25)
+        else:
+            plt.title(f"Pearson = {pearson[0][1]:.2f}", fontsize=25)
+
         if vec_map:
             plt.quiver(vec_map.XY, vec_map.YX, -vec_map.XY_final,vec_map.YX_final,
                        color="red", scale_units='xy',scale=1)
-        plt.show()
+        if save_path:
+            plt.savefig(save_path+".png", bbox_inches="tight")
+            plt.savefig(save_path+".svg", bbox_inches="tight")
+
+        #plt.show()

@@ -4,7 +4,7 @@ import numpy as np
 
 class TransformElastix():
     ECPECTED_EXPANSION = 3.5
-    SPACING = 10
+    SPACING = 40
     INITIAL_SIMILARITY_PF = "static/similarity_parameters.txt"
     INITIAL_SPLINE_PF = "static/b_spline_parameters.txt"
     QUIVER = namedtuple("Quiver", "XY YX XY_final YX_final cm")
